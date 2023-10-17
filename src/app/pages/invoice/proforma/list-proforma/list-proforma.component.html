@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-xl-12">
+      <app-card cardTitle="View Proforma Invoices" blockClass="table-border-style">
+        <div class="table-responsive">
+          <table class="table table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <thead>
+              <tr>
+                <th>Sl#</th>
+                <th>Proforma Invoice No</th>
+                <th>Proforma Date</th>
+                <th>Indent Reg No</th>
+                <th>Indent No</th>
+                <th>Indent Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr *ngFor="let row of proformaInvoice">
+                <td>{{ row.proformaInvoiceNo }}</td>
+                <td>{{ row.proformaInvoiceNo }}</td>
+                <td>{{ row.proformaDate }}</td>
+                <td>{{ row.indentRegNo }}</td>
+                <td>{{ row.indentNo }}</td>
+                <td>{{ row.indentDate }}</td>
+                
+                <td class="btn-page text-right">
+                    <a class="btn btn-xs btn-circle btn-icon btn-primary" [routerLink]="['/invoice/edit-proforma-invoice', row.proformaInvoiceNo]"><i _ngcontent-rni-c22="" class="feather icon-edit-1"></i></a>
+                    <button type="button" class="btn btn-xs btn-circle btn-outline-danger" (click)="deleteProforma(row)"><i class="feather icon-trash-2"></i></button>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </app-card>
+    </div>
+  </div>
+  

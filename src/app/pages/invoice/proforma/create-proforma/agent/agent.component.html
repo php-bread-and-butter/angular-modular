@@ -1,0 +1,540 @@
+<button type="button" class="btn btn-outline-secondary" data-toggle="modal" (click)="modalAgentName.show()"><i class="feather icon-plus"></i></button>
+
+<app-ui-modal #modalAgentName [containerClick]="false" [hideFooter]="true">
+    
+    <div class="app-modal-header">
+        <h5 class="modal-title">Add New Agent</h5>
+        <button type="button" class="close basic-close" #closebutton data-dismiss="modal" aria-label="Close" (click)="modalAgentName.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <form method="POST" [formGroup]="agentForm" (ngSubmit)="saveAgent()">
+            <input type="hidden" formControlName="agentType">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>Basic Information</a>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-hash"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Company ID" formControlName="companyID">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-edit-1"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Company Name" formControlName="companyName">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="companyName.touched && companyName.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="companyName.errors.required">
+                                            Company name is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="feather icon-edit-2"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Short Name" formControlName="shortName">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="shortName.touched && shortName.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="shortName.errors.required">
+                                            Short Name is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-at-sign"></i></span>
+                                        </div>
+                                        <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="email.touched && email.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="email.errors.required">
+                                            Email is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-at-sign"></i></span>
+                                        </div>
+                                        <input type="email" class="form-control form-control-sm" placeholder="Alt. Email" formControlName="altEmail">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text ">W</span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="WhatsApp" formControlName="whatsappNo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-phone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Phone" formControlName="phone">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-smartphone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Mobile" formControlName="mobile">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="mobile.touched && mobile.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="mobile.errors.required">
+                                            Mobile is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-smartphone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Alt. Mobile" formControlName="altMobile">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-printer"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Fax" formControlName="fax">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text ">S</span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Skype" formControlName="skypeID">
+                                    </div>    
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-facebook"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Facebook" formControlName="facebookID">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text "><i class="feather icon-globe"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Website" formControlName="website">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>Address Information</a>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="shadow-sm p-2 bg-white rounded">
+                                    <h6>Billing Address</h6>
+                                    <hr>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">House</span>
+                                            </div>
+                                            <input class="form-control" formControlName="bHouse" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="bHouse.touched && bHouse.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="bHouse.errors.required">
+                                                Billing house is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">Road</span>
+                                            </div>
+                                            <input class="form-control" formControlName="bRoad" />                                   
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">Thana</span>
+                                            </div>
+                                            <input class="form-control" formControlName="bThana" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="bThana.touched && bThana.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="bThana.errors.required">
+                                                Billing thana is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">District</span>
+                                            </div>
+                                            <input class="form-control" formControlName="bDistrict" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="bDistrict.touched && bDistrict.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="bDistrict.errors.required">
+                                                Billing district is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">Country</span>
+                                            </div>
+                                            <input class="form-control" formControlName="bCountry" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="bCountry.touched && bCountry.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="bCountry.errors.required">
+                                                Billing country is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">Sector</span>
+                                            </div>
+                                            <input class="form-control" formControlName="bSector" />                                   
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">City</span>
+                                            </div>
+                                            <input class="form-control" formControlName="bCity" />                                   
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">PostCode</span>
+                                            </div>
+                                            <input class="form-control" formControlName="bPostCode" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="bPostCode.touched && bPostCode.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="bPostCode.errors.required">
+                                                Billing post code is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="shadow-sm p-2 bg-white rounded">
+                                    <h6>
+                                        Shipping Address 
+                                        <div class="custom-switch inline-switch" [placement]="'top'" ngbTooltip="Same as Billing Address">
+                                            <input type="checkbox" class="custom-control-input" id="billingShippingSame"
+                                            (click)="billingShippingSame($event)">
+                                            <label class="custom-control-label" for="billingShippingSame"></label>
+                                        </div>
+                                    </h6>
+                                    <hr>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">House</span>
+                                            </div>
+                                            <input class="form-control" formControlName="sHouse" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="sHouse.touched && sHouse.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="sHouse.errors.required">
+                                                Shipping house is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">Road</span>
+                                            </div>
+                                            <input class="form-control" formControlName="sRoad" />                                   
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">Thana</span>
+                                            </div>
+                                            <input class="form-control" formControlName="sThana" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="sThana.touched && sThana.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="sThana.errors.required">
+                                                Shipping thana is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">District</span>
+                                            </div>
+                                            <input class="form-control" formControlName="sDistrict" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="sDistrict.touched && sDistrict.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="sDistrict.errors.required">
+                                                Shipping district is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">Country</span>
+                                            </div>
+                                            <input class="form-control" formControlName="sCountry" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="sCountry.touched && sCountry.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="sCountry.errors.required">
+                                                Shipping country is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">Sector</span>
+                                            </div>
+                                            <input class="form-control" formControlName="sSector" />                                   
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">City</span>
+                                            </div>
+                                            <input class="form-control" formControlName="sCity" />                                   
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group input-group-sm">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text ">PostCode</span>
+                                            </div>
+                                            <input class="form-control" formControlName="sPostCode" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text text-danger">*</span>
+                                            </div>
+                                        </div>
+                                        <small *ngIf="sPostCode.touched && sPostCode.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="sPostCode.errors.required">
+                                                Shipping post code is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink>Contact Information</a>
+                    <ng-template ngbNavContent 
+                        formArrayName="contactPerson"
+                        *ngFor="let item of agentForm.get('contactPerson')['controls']; let i = index;">
+                        <div class="row shadow-sm p-2 bg-white rounded" [formGroupName]="i">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text ">Name</span>
+                                        </div>
+                                        <input class="form-control" formControlName="cpName" #contactPersonName />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="cpName.touched && cpName.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="cpName.errors.required">
+                                            Contact person name is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text ">Mobile</span>
+                                        </div>
+                                        <input class="form-control" formControlName="cpMobile" #contactPersonMobile />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="cpMobile.touched && cpMobile.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="cpMobile.errors.required">
+                                            Contact person mobile is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text ">Email</span>
+                                        </div>
+                                        <input class="form-control" formControlName="cpEmail" #contactPersonEmail />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="cpEmail.touched && cpEmail.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="cpEmail.errors.required">
+                                            Contact person email is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text ">Address</span>
+                                        </div>
+                                        <input class="form-control" formControlName="cpAddress" />                                   
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text ">NID</span>
+                                        </div>
+                                        <input class="form-control" formControlName="cpNID" />                                   
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text ">Designation</span>
+                                        </div>
+                                        <input class="form-control" formControlName="cpDesignation" />                                   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button type="button" class="btn btn-sm btn-outline-info" (click)="addContactPerson()">Add Contact Person</button>
+                            </div>
+                            <div class="col-md-12 table-responsive" *ngIf="contactPerson.length > 0">
+                                <table class="table table-bordered m-t-20">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Mobile</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
+                                        <th>NID</th>
+                                        <th>Designation</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr *ngFor="let row of contactPerson">
+                                        <td>{{row.cpName}}</td>
+                                        <td>{{row.cpMobile}}</td>
+                                        <td>{{row.cpEmail}}</td>
+                                        <td>{{row.cpAddress}}</td>
+                                        <td>{{row.cpNID}}</td>
+                                        <td>{{row.cpDesignation}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-xs btn-circle btn-outline-danger" (click)="removeContactPerson(row)"><i class="feather icon-trash-2"></i></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+            <hr style="margin-left: -25px; margin-right: -25px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-secondary float-left" data-dismiss="modal" (click)="modalAgentName.hide()">Close</button>
+                    <button type="submit" class="btn btn-primary float-right" [disabled]="agentForm.invalid">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ui-modal>

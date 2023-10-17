@@ -1,0 +1,466 @@
+<button type="button" class="btn btn-outline-secondary" data-toggle="modal" (click)="modalSeller.show()"><i class="feather icon-plus"></i></button>
+
+<app-ui-modal #modalSeller [containerClick]="false" [hideFooter]="true">
+    
+    <div class="app-modal-header">
+        <h5 class="modal-title">Add New Seller</h5>
+        <button type="button" class="close basic-close" #closebutton data-dismiss="modal" aria-label="Close" (click)="modalSeller.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <form method="POST" [formGroup]="sellerForm" (ngSubmit)="saveSeller()">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>Supplier Information</a>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="feather icon-hash"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Supplier Code" formControlName="supplierCode">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="supplierCode.touched && supplierCode.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="supplierCode.errors.required">
+                                            Supplier code is required!
+                                        </ng-template>
+                                        <ng-template [ngIf]="supplierCode.errors.pattern">
+                                            Supplier code must be numeric digits!
+                                        </ng-template>
+                                        <ng-template [ngIf]="supplierCode.errors.minlength">
+                                            Supplier code must be minimum 3 digits!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="feather icon-edit-2"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Supplier Name" formControlName="supplierName">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="supplierName.touched && supplierName.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="supplierName.errors.required">
+                                            Supplier Name is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="feather icon-edit-1"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Short Name" formControlName="shortName">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="shortName.touched && shortName.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="shortName.errors.required">
+                                            Short Name is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="feather icon-hash"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Supplier NID" formControlName="supplierNID">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="feather icon-hash"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Supplier Passport No." formControlName="supplierPassport">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" [placement]="'top'" ngbTooltip="Supplier Type">ST</span>
+                                        </div>
+                                        <select class="form-control form-control-sm" formControlName="supplierType"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" [placement]="'top'" ngbTooltip="Business Category">BC</span>
+                                        </div>
+                                        <select class="form-control form-control-sm" formControlName="businessCategory" placeholder="Location"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="feather icon-map-pin"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Location" formControlName="location">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="feather icon-file-text"></i></span>
+                                        </div>
+                                        <textarea class="form-control" placeholder="Product/Service Description" formControlName="productServiceDescription"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>Contact Details</a>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">House</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="House" formControlName="house">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Road</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Road" formControlName="road">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Sector</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Sector" formControlName="sector">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Upazilla</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Upazilla" formControlName="upazilla">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">City</span>
+                                        </div>
+                                        <select class="form-control" placeholder="City" formControlName="city"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Zip</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Zip" formControlName="zip">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">District</span>
+                                        </div>
+                                        <select class="form-control" placeholder="District" formControlName="district"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Country</span>
+                                        </div>
+                                        <select class="form-control" placeholder="Country" formControlName="country"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Phone</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Phone" formControlName="phone">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Fax</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Fax" formControlName="fax">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="feather icon-smartphone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Mobile" formControlName="mobile">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="mobile.touched && mobile.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="mobile.errors.required">
+                                            Mobile is required!
+                                        </ng-template>
+                                        <ng-template [ngIf]="mobile.errors.pattern">
+                                            Mobile must be numeric digits!
+                                        </ng-template>
+                                        <ng-template [ngIf]="mobile.errors.minlength">
+                                            Mobile must be minimum 11 digits!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="feather icon-at-sign" aria-hidden="true"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Email" formControlName="email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" [placement]="'top'" ngbTooltip="Contact Person">CP</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Contact Person" formControlName="cperson">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Position</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Position" formControlName="position">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="feather icon-globe" aria-hidden="true"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Website" formControlName="website">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink>Financial Transaction</a>
+                    <ng-template ngbNavContent>
+                        <h6 clas="m-b-0 m-t-10">Bank Details</h6>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Account Name</span>
+                                        </div>
+                                        <input class="form-control" formControlName="accName" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="accName.touched && accName.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="accName.errors.required">
+                                            Account Name is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Account number</span>
+                                        </div>
+                                        <input class="form-control" formControlName="accNumber" />                                   
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="accNumber.touched && accNumber.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="accNumber.errors.required">
+                                            Account number is required!
+                                        </ng-template>
+                                        <ng-template [ngIf]="accNumber.errors.pattern">
+                                            Account number must be numeric digits!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Bank Name</span>
+                                        </div>
+                                        <select class="form-control" formControlName="bankName">
+                                            <option value=""></option>
+                                            <option value="Test Bank">Test Bank</option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="bankName.touched && bankName.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="bankName.errors.required">
+                                            Bank Name is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Branch Name</span>
+                                        </div>
+                                        <input class="form-control" formControlName="sbranchName" />                                   
+                                        <div class="input-group-append">
+                                            <span class="input-group-text text-danger">*</span>
+                                        </div>
+                                    </div>
+                                    <small *ngIf="sbranchName.touched && sbranchName.invalid" class="form-text text-danger alert-validate">
+                                        <i class="feather icon-alert-circle"></i>
+                                        <ng-template [ngIf]="sbranchName.errors.required">
+                                            Branch Name is required!
+                                        </ng-template>
+                                    </small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Routing</span>
+                                        </div>
+                                        <input class="form-control" formControlName="routing" />                                   
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Swift Code</span>
+                                        </div>
+                                        <input class="form-control" formControlName="swiftCode" />                                   
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h6 clas="m-b-0 m-t-10">VAT & TAX Information</h6>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">VAT Reg No.</span>
+                                        </div>
+                                        <input class="form-control" formControlName="vatRegNo" />                                   
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">BIN No.</span>
+                                        </div>
+                                        <input class="form-control" formControlName="binNo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">eTin#</span>
+                                        </div>
+                                        <input class="form-control" formControlName="eTin" />                                   
+                                    </div>
+                                </div>
+                                <div class="form-group form-check">
+                                    <input class="form-check-input" id="tds" type="checkbox" formControlName="tds" />
+                                    <label class="form-check-label" for="tds">TDS</label>
+                                </div>
+                            </div>
+                        </div>
+                        <h6 clas="m-b-0 m-t-10">Documents</h6>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Document Code</span>
+                                        </div>
+                                        <input class="form-control" formControlName="docCode" />                                   
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Reference</span>
+                                        </div>
+                                        <input class="form-control" formControlName="reference" />                                   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Document Type</span>
+                                        </div>
+                                        <select class="form-control" formControlName="docType"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+            <hr style="margin-left: -25px; margin-right: -25px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-secondary float-left" data-dismiss="modal" (click)="modalSeller.hide()">Close</button>
+                    <button type="submit" class="btn btn-primary float-right" [disabled]="sellerForm.invalid">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ui-modal>

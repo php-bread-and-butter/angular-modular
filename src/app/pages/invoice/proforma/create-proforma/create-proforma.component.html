@@ -1,0 +1,796 @@
+<form method="POST" [formGroup]="proformaForm" (ngSubmit)="saveProforma()">
+    <app-card cardTitle="Proforma Invoice" [options]="false">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputIndentNo" class="col-sm-5 col-form-label col-form-label-sm">Indent No:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="inputIndentNo" formControlName="indentNo">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputAgentName" class="col-sm-5 col-form-label col-form-label-sm">Name of Agent:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <select class="custom-select" id="inputAgentName" formControlName="nameOfAgent">
+                                <option *ngFor="let row of invoiceService.agentList" value="{{row.companyname || row.companyName}}">{{row.companyname || row.companyName}}</option>
+                            </select>
+                            <div class="input-group-append">
+                                <app-agent></app-agent>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputIndentRegNo" class="col-sm-5 col-form-label col-form-label-sm">Indent Reg No.:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="inputIndentRegNo" formControlName="indentRegNo" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputSellerName" class="col-sm-5 col-form-label col-form-label-sm">Name of Seller:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <select class="custom-select" id="inputSellerName" formControlName="seller">
+                                <option *ngFor="let row of invoiceService.supplierList" value="{{row.suppliername || row.supplierName}}">{{row.suppliername || row.supplierName}}</option>
+                            </select>
+                            <div class="input-group-append">
+                                <app-seller></app-seller>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label [for]="inputIndentDate" class="col-sm-5 col-form-label col-form-label-sm">Indent Date:</label>
+                    <div class="col-sm-7">
+                        <mat-form-field style="width: 100%;">
+                            <input class="form-control" matInput [matDatepicker]="inputIndentDate" formControlName="indentDate" />
+                            <mat-datepicker-toggle matSuffix [for]="inputIndentDate"></mat-datepicker-toggle>
+                            <mat-datepicker #inputIndentDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputBeneficiaryBank" class="col-sm-5 col-form-label col-form-label-sm">Beneficiary Bank:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <select class="custom-select" id="inputBeneficiaryBank" formControlName="beneficiaryBank">
+                                <option *ngFor="let row of invoiceService.beneficiaryBankList" value="{{row.name}}">{{row.name}}</option>
+                            </select>
+                            <div class="input-group-append">
+                                <app-beneficiary-bank></app-beneficiary-bank>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputProformaInvoice" class="col-sm-5 col-form-label col-form-label-sm">Proforma Invoice#:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="inputProformaInvoice" formControlName="proformaInvoiceNo" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputSoldTo" class="col-sm-5 col-form-label col-form-label-sm">SOLD TO:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <select class="custom-select" id="inputSoldTo" formControlName="soldTo">
+                                <option *ngFor="let row of invoiceService.soldToList" value="{{row.name}}">{{row.name}}</option>
+                            </select>
+                            <div class="input-group-append">
+                                <app-sold-to></app-sold-to>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputProformaDate" class="col-sm-5 col-form-label col-form-label-sm">Proforma Date:</label>
+                    <div class="col-sm-7">
+                        <mat-form-field style="width: 100%;">
+                            <input class="form-control" matInput [matDatepicker]="inputProformaDate" formControlName="proformaDate" />
+                            <mat-datepicker-toggle matSuffix [for]="inputProformaDate"></mat-datepicker-toggle>
+                            <mat-datepicker #inputProformaDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputNotifyParty2" class="col-sm-5 col-form-label col-form-label-sm">NOTIFY PARTY 2:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <select class="custom-select" id="inputNotifyParty2" formControlName="notifyParty">
+                                <option *ngFor="let row of invoiceService.notifyPartyList" value="{{row.name}}">{{row.name}}</option>
+                            </select>
+                            <div class="input-group-append">
+                                <app-notify-party></app-notify-party>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputLedger" class="col-sm-5 col-form-label col-form-label-sm">Ledger:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <select class="custom-select" id="inputLedger" formControlName="ledger">
+                                <option *ngFor="let row of invoiceService.supplierList" value="{{row.suppliername || row.supplierName}}">{{row.suppliername || row.supplierName}}</option>
+                            </select>
+                            <div class="input-group-append">
+                                <app-ledger></app-ledger>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputConsignee" class="col-sm-5 col-form-label col-form-label-sm">CONSIGNEE:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <select class="custom-select" id="inputConsignee" formControlName="consignee">
+                                <option *ngFor="let row of invoiceService.consigneeList" value="{{row.name}}">{{row.name}}</option>
+                            </select>
+                            <div class="input-group-append">
+                                <app-consignee></app-consignee>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-card>
+    
+    <app-card cardTitle="Shipment Details" [options]="false">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputPortOfLoading" class="col-sm-5 col-form-label col-form-label-sm">Port Of Loading:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="inputPortOfLoading" formControlName="portOfLoading" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputModeOfPayment" class="col-sm-5 col-form-label col-form-label-sm">Mode Of Payment:</label>
+                    <div class="col-sm-7">
+                        <select class="custom-select" id="inputModeOfPayment" formControlName="modeOfPayment">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputFinalDestination" class="col-sm-5 col-form-label col-form-label-sm">Final Destination:</label>
+                    <div class="col-sm-7">
+                        <select class="custom-select" id="inputFinalDestination" formControlName="finalDesination">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label col-form-label-sm">L/C Clause:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" placeholder="ADD Additional Clauses" formControlName="lcClause" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputShipmentPeriod" class="col-sm-5 col-form-label col-form-label-sm">Shipment Period:</label>
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputShipmentPeriod" formControlName="toPort" />
+                            <div class="input-group-prepend">
+                                <label for="inputShipmentPeriodFrom" class="input-group-text">From: </label>
+                            </div>
+                            <input type="text" class="form-control" id="inputShipmentPeriodFrom" formControlName="fromPort" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="input3rdPartyDocuments" class="col-sm-5 col-form-label col-form-label-sm">3rd Party Documents:</label>
+                    <div class="col-sm-7">
+                        <select class="custom-select" id="input3rdPartyDocuments" formControlName="thirdPartyDoc">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputTimeOfShipment" class="col-sm-5 col-form-label col-form-label-sm">Time Of Shipment:</label>
+                    <div class="col-sm-7">
+                        <mat-form-field style="width: 100%;">
+                            <input class="form-control" matInput [matDatepicker]="inputTimeOfShipment" formControlName="timeOfShipment" />
+                            <mat-datepicker-toggle matSuffix [for]="inputTimeOfShipment"></mat-datepicker-toggle>
+                            <mat-datepicker #inputTimeOfShipment></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputYourRef" class="col-sm-5 col-form-label col-form-label-sm">Your Ref:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="inputYourRef" formControlName="yourRef" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputModeOfShipment" class="col-sm-5 col-form-label col-form-label-sm">Mode Of Shipment:</label>
+                    <div class="col-sm-7">
+                        <select class="custom-select" id="inputModeOfShipment" formControlName="modeOfShipment">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputRemarks" class="col-sm-5 col-form-label col-form-label-sm">Remarks:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="inputRemarks" formControlName="remarks" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputPacking" class="col-sm-5 col-form-label col-form-label-sm">Packing:</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="inputPacking" formControlName="packing" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputInsurance" class="col-sm-5 col-form-label col-form-label-sm">Insurance:</label>
+                    <div class="col-sm-7">
+                        <select class="custom-select" id="inputInsurance" formControlName="insurance">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="inputInspection" class="col-sm-5 col-form-label col-form-label-sm">Inspection:</label>
+                    <div class="col-sm-7">
+                        <select class="custom-select" id="inputInspection" formControlName="inspection">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-card>
+    
+    <app-card cardTitle="Item & Goods Description" [options]="false">
+        <div class="row" formArrayName="items"
+            *ngFor="let item of proformaForm.get('items')['controls']; let i = index;">
+            <div class="col" [formGroupName]="i">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <app-item-entry></app-item-entry>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputGoodsDescription" class="col-sm-5 col-form-label col-form-label-sm">Goods Description:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="inputGoodsDescription" formControlName="goodsDesc" />
+                                <small *ngIf="goodsDesc.touched && goodsDesc.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="goodsDesc.errors.required">
+                                        Goods description is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputGoodsCategory" class="col-sm-5 col-form-label col-form-label-sm">Goods Category:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="inputGoodsCategory" formControlName="goodsCategory" #goodsCategoryInput />
+                                <small *ngIf="goodsCategory.touched && goodsCategory.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="goodsCategory.errors.required">
+                                        Goods category is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputCountryOfOrigin" class="col-sm-5 col-form-label col-form-label-sm">Country Of Origin:</label>
+                            <div class="col-sm-7">
+                                <select class="custom-select" id="inputCountryOfOrigin" formControlName="countryOfOrigin">
+                                    <option selected>Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                                <small *ngIf="countryOfOrigin.touched && countryOfOrigin.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="countryOfOrigin.errors.required">
+                                        Country of origin is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputItemName" class="col-sm-5 col-form-label col-form-label-sm">Item Name:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="inputItemName" formControlName="itemName" readonly />
+                                <small *ngIf="itemName.touched && itemName.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="itemName.errors.required">
+                                        Item name is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputGrade" class="col-sm-5 col-form-label col-form-label-sm">Grade:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="inputGrade" formControlName="grade" />
+                                <small *ngIf="grade.touched && grade.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="grade.errors.required">
+                                        Grade is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputQuantity" class="col-sm-5 col-form-label col-form-label-sm">Quantity:</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputQuantity" formControlName="quantity" />
+                                    <div class="input-group-append wid-80">
+                                        <select class="custom-select" formControlName="quantityUnit">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                        <small *ngIf="quantity.touched && quantity.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="quantity.errors.required">
+                                                Quantity is required!
+                                            </ng-template>
+                                        </small>
+                                        <small *ngIf="quantityUnit.touched && quantityUnit.invalid" class="form-text text-danger alert-validate">
+                                            <i class="feather icon-alert-circle"></i>
+                                            <ng-template [ngIf]="quantityUnit.errors.required">
+                                                Quantity unit is required!
+                                            </ng-template>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputBrand" class="col-sm-5 col-form-label col-form-label-sm">Brand:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="inputBrand" formControlName="brand" />
+                                <small *ngIf="brand.touched && brand.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="brand.errors.required">
+                                        Brand is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputUnitPrice" class="col-sm-5 col-form-label col-form-label-sm">Unit Price:</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputUnitPrice" formControlName="unitPrice" />
+                                    <div class="input-group-append wid-80">
+                                        <select class="custom-select" formControlName="priceUnit">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <small *ngIf="unitPrice.touched && unitPrice.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="unitPrice.errors.required">
+                                        Unit price is required!
+                                    </ng-template>
+                                </small>
+                                <small *ngIf="priceUnit.touched && priceUnit.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="priceUnit.errors.required">
+                                        Price unit is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputSubs" class="col-sm-5 col-form-label col-form-label-sm">Subs:</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputSubs" formControlName="subs" />
+                                    <div class="input-group-append wid-80">
+                                        <select class="custom-select" formControlName="subsUnit">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <small *ngIf="subs.touched && subs.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="subs.errors.required">
+                                        Subs is required!
+                                    </ng-template>
+                                </small>
+                                <small *ngIf="subsUnit.touched && subsUnit.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="subsUnit.errors.required">
+                                        Subs unit is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputTotalPrice" class="col-sm-5 col-form-label col-form-label-sm">Total Price:</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputTotalPrice" formControlName="totalPrice" />
+                                    <div class="input-group-append wid-80">
+                                        <select class="custom-select" formControlName="totalUnit">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <small *ngIf="totalPrice.touched && totalPrice.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="totalPrice.errors.required">
+                                        Total price is required!
+                                    </ng-template>
+                                </small>
+                                <small *ngIf="totalUnit.touched && totalUnit.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="totalUnit.errors.required">
+                                        Total unit is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputReelWidth" class="col-sm-5 col-form-label col-form-label-sm">Reel Width:</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputReelWidth" formControlName="reelWidth" />
+                                    <div class="input-group-append wid-80">
+                                        <select class="custom-select" formControlName="reelWidthUnit">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <small *ngIf="reelWidth.touched && reelWidth.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="reelWidth.errors.required">
+                                        Reel width is required!
+                                    </ng-template>
+                                </small>
+                                <small *ngIf="reelWidthUnit.touched && reelWidthUnit.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="reelWidthUnit.errors.required">
+                                        Reel width unit is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputFOBValue" class="col-sm-5 col-form-label col-form-label-sm">FOB Value:</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputFOBValue" formControlName="fobValue" />
+                                    <div class="input-group-append wid-80">
+                                        <select class="custom-select" formControlName="fobValueUnit">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <small *ngIf="fobValue.touched && fobValue.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="fobValue.errors.required">
+                                        FOB value is required!
+                                    </ng-template>
+                                </small>
+                                <small *ngIf="fobValueUnit.touched && fobValueUnit.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="fobValueUnit.errors.required">
+                                        FOB value unit is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputCoreDia" class="col-sm-5 col-form-label col-form-label-sm">Core Dia:</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputCoreDia" formControlName="coreDia" />
+                                    <div class="input-group-append wid-80">
+                                        <select class="custom-select" formControlName="coreDiaUnit">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <small *ngIf="coreDia.touched && coreDia.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="coreDia.errors.required">
+                                        Core Dia is required!
+                                    </ng-template>
+                                </small>
+                                <small *ngIf="coreDiaUnit.touched && coreDiaUnit.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="coreDiaUnit.errors.required">
+                                        Core dia unit is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputOceanFreight" class="col-sm-5 col-form-label col-form-label-sm">Ocean Freight:</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputOceanFreight" formControlName="oceanFreight" />
+                                    <div class="input-group-append wid-80">
+                                        <select class="custom-select" formControlName="oceanFreightUnit">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <small *ngIf="oceanFreight.touched && oceanFreight.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="oceanFreight.errors.required">
+                                        Ocean freight is required!
+                                    </ng-template>
+                                </small>
+                                <small *ngIf="oceanFreightUnit.touched && oceanFreightUnit.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="oceanFreightUnit.errors.required">
+                                        Ocean freight unit is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputReelDia" class="col-sm-5 col-form-label col-form-label-sm">Reel Dia:</label>
+                            <div class="col-sm-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputReelDia" formControlName="reelDia" />
+                                    <div class="input-group-append wid-80">
+                                        <select class="custom-select" formControlName="reelDiaUnit">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <small *ngIf="reelDia.touched && reelDia.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="reelDia.errors.required">
+                                        Reel dia is required!
+                                    </ng-template>
+                                </small>
+                                <small *ngIf="reelDiaUnit.touched && reelDiaUnit.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="reelDiaUnit.errors.required">
+                                        Reel dia unit is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="inputReelDia2" class="col-sm-5 col-form-label col-form-label-sm">Reel Dia (+/-):</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="inputReelDiaPlusMinus" formControlName="reelDiaPlusMinus" />
+                                <small *ngIf="reelDiaPlusMinus.touched && reelDiaPlusMinus.invalid" class="form-text text-danger alert-validate">
+                                    <i class="feather icon-alert-circle"></i>
+                                    <ng-template [ngIf]="reelDiaPlusMinus.errors.required">
+                                        Reel Dia (+/-) is required!
+                                    </ng-template>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-primary" type="button" #addToList (click)="addItemGoods()">Add To List</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sl#</th>
+                        <th>S/M</th>
+                        <th>Origin</th>
+                        <th>Description Of Goods</th>
+                        <th>Brand</th>
+                        <th>Grade</th>
+                        <th>Subs</th>
+                        <th>Reel Width</th>
+                        <th>Core Dia</th>
+                        <th>Reel Dia</th>
+                        <th>Reel Dia (+/-)</th>
+                        <th>Qty</th>
+                        <th>UoM</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of itemGoods; let i = index;">
+                        <td>{{i+1}}</td>
+                        <td>{{row.itemName}}</td>
+                        <td>{{row.countryOfOrigin}}</td>
+                        <td>{{row.goodsDesc}}</td>
+                        <td>{{row.brand}}</td>
+                        <td>{{row.grade}}</td>
+                        <td>{{row.subs}}</td>
+                        <td>{{row.reelWidth}}</td>
+                        <td>{{row.coreDia}}</td>
+                        <td>{{row.reelDia}}</td>
+                        <td>{{row.reelDiaPlusMinus}}</td>
+                        <td>{{row.quantity}}</td>
+                        <td></td>
+                        <td>{{row.unitPrice}}</td>
+                        <td></td>
+                        <td>
+                            <button type="button" class="btn btn-xs btn-circle btn-outline-danger" (click)="removeItemGoods(row)"><i class="feather icon-trash-2"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr class="my-1"/>
+        <div class="row">
+            <div class="col-md-12 text-center btn-page m-t-20">
+                <button class="btn btn-primary" id="save" type="submit" disabled="">Submit</button>
+                <button class="btn btn-outline-primary" id="upload_proforma" type="button">Upload Proforma .pdf</button>
+            </div>
+        </div>    
+    </app-card>
+</form>

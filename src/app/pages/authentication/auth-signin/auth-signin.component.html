@@ -1,0 +1,69 @@
+<div class="auth-wrapper">
+  <div class="auth-content">
+    <div class="card">
+      <div class="row align-items-center text-center">
+        <div class="col-md-12">
+          <div class="card-body">
+            <span class="logo">LC Management</span>
+            <h4 class="mb-3 f-w-400">Signin</h4>
+
+            <div *ngIf="invalidLogin" class="alert alert-danger">{{loginError || 'Invalid email and/or password.'}}</div>
+
+            <form method="POST" class="register-form" [class.was-validated]="loginForm.touched && loginForm.invalid" [formGroup]="loginForm" (ngSubmit)="signIn()">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                </div>
+                <input type="email" class="form-control" placeholder="Email address" formControlName="email" required />
+              </div>
+              
+              <small *ngIf="userEmail.touched && userEmail.invalid" class="form-text text-danger alert-validate">
+                <i class="feather icon-alert-circle"></i>
+                <ng-template [ngIf]="userEmail.errors.required">
+                  Email address is required!
+                </ng-template>
+                <ng-template [ngIf]="userEmail.errors.email">
+                  Email address invalid!
+                </ng-template>
+                <ng-template [ngIf]="userEmail.errors.noSpace">
+                  Email address cannot contain space.
+                </ng-template>
+              </small>
+            
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="feather icon-lock"></i></span>
+                </div>
+                <input type="password" class="form-control" placeholder="Password" formControlName="pwd" required />
+              </div>
+              
+              <small *ngIf="userPass.touched && userPass.invalid" class="form-text text-danger alert-validate">
+                <i class="feather icon-alert-circle"></i>
+                <ng-template [ngIf]="userPass.errors.required">
+                  Password is required!
+                </ng-template>
+                <ng-template [ngIf]="userPass.errors.minlength">
+                  Password should be of minimum {{ userPass.errors.minlength.requiredLength }} character!
+                </ng-template>
+                <ng-template [ngIf]="userPass.errors.noSpace">
+                  Password cannot contain space.
+                </ng-template>
+              </small>
+              <div class="form-group text-left mt-2">
+                <div class="checkbox checkbox-primary d-inline">
+                  <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" formControlName="remember-me">
+                  <label for="checkbox-fill-a1" class="cr"> Save credentials</label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-block btn-primary mb-4" [disabled]="loginForm.invalid || loading">
+                <span class="spinner-border spinner-border-sm" role="status" *ngIf="loading"></span>
+                <span *ngIf="!loading">Signin</span>
+              </button>
+            </form>
+            <p class="mb-2 text-muted">Forgot password? <a [routerLink]="['/auth/reset-password']" class="f-w-400">Reset</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

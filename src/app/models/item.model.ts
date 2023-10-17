@@ -1,0 +1,34 @@
+export class ItemModel {
+  itemid: number = 0;
+  itemcode: string = '';
+  itemname: string = '';
+  parent: number = 0;
+  topparent: number = 0;
+  lr: string = 'L';
+  depth: number = 0;
+  specification: string = '';
+  model: string = '';
+  countryoforigin: string = '';
+  importance: string = '';
+  parts: string = '';
+  manufacturer: string = '';
+  categorization: string = '';
+  maxconsump: number = 0;
+  minconsump: number = 0;
+  avgconsump: number = 0;
+  leadtime: number = 0;
+  reorderlevel: number = 0;
+  maxstockqty: number = 0;
+  minstockqty: number = 0;
+  stafystockqty: number = 0;
+  unitofmeasurement: string = '0';
+  currency: number = 0;
+  avgcostpunit: number = 0;
+  orderingcostpunit: number = 0;
+  carryingcostpunit: number = 0;
+  lastpurcostpunit: number = 0;
+  qunit: string = '';
+  cunit: string = '';
+  checked : boolean = false;
+  name: string = '';
+}

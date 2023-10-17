@@ -1,0 +1,180 @@
+<button type="button" class="btn btn-outline-secondary" data-toggle="modal" (click)="modalConsignee.show()"><i class="feather icon-plus"></i></button>
+
+<app-ui-modal #modalConsignee [containerClick]="false" [hideFooter]="true">
+    
+    <div class="app-modal-header">
+        <h5 class="modal-title">Add New Consignee</h5>
+        <button type="button" class="close basic-close" #closebutton data-dismiss="modal" aria-label="Close" (click)="modalConsignee.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <form method="POST" [formGroup]="consigneeForm" (ngSubmit)="saveConsignee()">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="feather icon-hash"></i></span>
+                            </div>
+                            <input type="text" class="form-control form-control-sm" placeholder="Code" formControlName="code">
+                            <div class="input-group-append">
+                                <span class="input-group-text text-danger">*</span>
+                            </div>
+                        </div>
+                        <small *ngIf="code.touched && code.invalid" class="form-text text-danger alert-validate">
+                            <i class="feather icon-alert-circle"></i>
+                            <ng-template [ngIf]="code.errors.required">
+                                Code is required!
+                            </ng-template>
+                            <ng-template [ngIf]="code.errors.pattern">
+                                Code must be numeric digits!
+                            </ng-template>
+                            <ng-template [ngIf]="code.errors.minlength">
+                                Code must be minimum 3 digits!
+                            </ng-template>
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="feather icon-edit-2"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control form-control-sm" placeholder="Name" formControlName="name">
+                            <div class="input-group-append">
+                                <span class="input-group-text text-danger">*</span>
+                            </div>
+                        </div>
+                        <small *ngIf="name.touched && name.invalid" class="form-text text-danger alert-validate">
+                            <i class="feather icon-alert-circle"></i>
+                            <ng-template [ngIf]="name.errors.required">
+                                Name is required!
+                            </ng-template>
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="feather icon-smartphone"></i></span>
+                            </div>
+                            <input type="text" class="form-control form-control-sm" placeholder="Mobile" formControlName="mobile">
+                            <div class="input-group-append">
+                                <span class="input-group-text text-danger">*</span>
+                            </div>
+                        </div>
+                        <small *ngIf="mobile.touched && mobile.invalid" class="form-text text-danger alert-validate">
+                            <i class="feather icon-alert-circle"></i>
+                            <ng-template [ngIf]="mobile.errors.required">
+                                Mobile is required!
+                            </ng-template>
+                            <ng-template [ngIf]="mobile.errors.pattern">
+                                Mobile must be numeric digits!
+                            </ng-template>
+                            <ng-template [ngIf]="mobile.errors.minlength">
+                                Mobile must be minimum 11 digits!
+                            </ng-template>
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="feather icon-at-sign" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Email" formControlName="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Upazila</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Upazila" formControlName="upazila">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">House</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="House" formControlName="house">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Road</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Road" formControlName="road">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Sector</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Sector" formControlName="sector">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">District</span>
+                            </div>
+                            <select class="form-control" placeholder="District" formControlName="district"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Binval</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Binval" formControlName="binval">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h6>VAT & TAX Information</h6>
+            <hr>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">eTin#</span>
+                            </div>
+                            <input class="form-control" formControlName="etin" />                                   
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">NID#</span>
+                            </div>
+                            <input type="text" class="form-control form-control-sm" placeholder="NID" formControlName="nid">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <div class="input-group input-group-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">VAT Reg No.</span>
+                            </div>
+                            <input class="form-control" formControlName="vatReg" />                                   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-secondary float-left" data-dismiss="modal" (click)="modalConsignee.hide()">Close</button>
+                    <button type="submit" class="btn btn-primary float-right" [disabled]="consigneeForm.invalid">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-ui-modal>

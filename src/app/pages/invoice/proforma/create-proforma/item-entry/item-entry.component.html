@@ -1,0 +1,51 @@
+<button type="button" class="btn btn-secondary btn-block" data-toggle="modal" (click)="modalItemEntry.show()">Show Items & Categories</button>
+
+<app-ui-modal #modalItemEntry [containerClick]="false" [hideFooter]="true">
+    
+    <div class="app-modal-header">
+        <h5 class="modal-title">Item Heads & Subheads</h5>
+        <button type="button" class="close basic-close" #closebutton data-dismiss="modal" aria-label="Close" (click)="modalItemEntry.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <form method="POST" [formGroup]="itemEntryForm" (ngSubmit)="saveItemEntry()">
+            <div class="input-group input-group-sm">
+                <input class="form-control" placeholder="Filter Result" type="text" (keyup)="searchItemEntry(search.value)" #search>
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-secondary" [placement]="'top'" ngbTooltip="Back" (click)="onBackButtonClick()"><i class="feather icon-corner-up-left"></i></button>
+                    <button type="button" class="btn btn-primary" [placement]="'top'" ngbTooltip="Add Top Head" (click)="onAddHeadToTopLevelButtonClick()"><i class="feather icon-plus"></i></button>
+                    <button type="button" class="btn btn-info" [placement]="'top'" ngbTooltip="Print" (click)="onPrintButtonClick()"><i class="feather icon-printer"></i></button>
+                    <button type="button" class="btn btn-success" (click)="saveItemEntry()">Save</button>
+                </div>
+            </div>
+            <small class="form-text">Records found {{invoiceService.filteredItems.length}}</small>
+            <br>
+            <div class="spinner-border text-primary modal-loader" *ngIf="invoiceService.filteredItems.length == 0">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="shadow pt-2 mb-2 bg-light rounded" *ngIf="invoiceService.selectedItem">
+                <dl class="dl-horizontal row m-0">
+                    <dt class="col-sm-3">at:</dt>
+                    <dd class="col-sm-9">
+                        {{getCurrentItemName()}}
+                    </dd>
+                    <dt class="col-sm-3">Parent:</dt>
+                    <dd class="col-sm-9">
+                        {{getCurrentItemParentName()}}
+                    </dd>
+                    <dt class="col-sm-3">Path:</dt>
+                    <dd class="col-sm-9">
+                        {{getCurrentPath()}}
+                    </dd>
+                </dl>
+            </div>
+            <div class="shadow wrap-item">
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let item of invoiceService.filteredItems"
+                    [class.active]="item === invoiceService.selectedItem"
+                    (click)="onSelect(item)">
+                    <span *ngIf="item.lr=='R'">IN</span>{{item.itemid}}-{{item.name}}</li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</app-ui-modal>
